@@ -44,7 +44,7 @@
       },
       //Provides sorting by tweet_volume from largest to smallest
       _sortByVolume: function(a, b){
-        return a.tweet_volume > b.tweet_volume ? -1 : 1;
+        return a.tweet_volume < b.tweet_volume ? 1 : -1;
       }
     });
   </script>
