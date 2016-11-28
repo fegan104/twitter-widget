@@ -20,13 +20,13 @@
 
     <!-- Twitter AJAX -->
    <iron-ajax auto
-    url="https://shielded-badlands-99959.herokuapp.com/twitter" 
+    url="https://gentle-temple-65667.herokuapp.com/twitter" 
     handle-as="json"
     last-response="{{trends}}"></iron-ajax> 
     <!-- dom-repeat -->
-    <template is="dom-repeat" items="{{trends}}">
+    <template is="dom-repeat" items="{{trends}}" sort="_sortByVolume">
       <div>
-        <span style="font-size: 150%;">[[item.name]]</span>
+        <span style="font-size: [[_volumeToFont(item.tweet_volume)]]%;">[[item.name]]</span>
         <a href="[[item.url]]" target="_blank">
           <iron-icon icon="icons:open-in-new" class="small"></iron-icon>
         </a>
@@ -36,8 +36,16 @@
 
   <script>
     Polymer({
-      /* this is the element's prototype */
       is: 'twitter-widget',
+      //converts tweet_volume field to a font size to show just how popular something is
+      _volumeToFont: function(tweet_volume) {
+        console.log("scaling " + (100 + tweet_volume/1000));
+        return 100 + tweet_volume/1000;
+      },
+      //Provides sorting by tweet_volume from largest to smallest
+      _sortByVolume: function(a, b){
+        return a.tweet_volume > b.tweet_volume ? -1 : 1;
+      }
     });
   </script>
   </dom-module>
